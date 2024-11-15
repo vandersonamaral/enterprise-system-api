@@ -1,0 +1,32 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: enterprise
+      MYSQL_USER: Vanderson
+      MYSQL_PASSWORD: root
+    ports:
+      - "3308:3306"
+    networks:
+      - enterprise_network
+
+  app:
+    image: openjdk:21
+    container_name: enterprise-system-api
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/enterprise
+      SPRING_DATASOURCE_USERNAME: Vanderson
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    networks:
+      - enterprise_network
+
+networks:
+  enterprise_network:
+    driver: bridge
