@@ -1,11 +1,11 @@
-# Usar a imagem base do OpenJDK
-FROM openjdk:17-jdk-slim
-
-# Definir o diretório de trabalho dentro do contêiner
+FROM openjdk:21
 WORKDIR /app
 
-# Copiar o arquivo JAR gerado pelo Maven/Gradle para o contêiner
-COPY target/empresa-api.jar empresa-api.jar
+# Copiar o JAR da aplicação para o contêiner
+COPY target/enterprise-system-api-0.0.1-SNAPSHOT.jar /app/enterprise-system-api.jar
 
-# Comando para executar o Spring Boot no contêiner
-ENTRYPOINT ["java", "-jar", "empresa-api.jar"]
+# Expor a porta 8080
+EXPOSE 8080
+
+# Comando para rodar a aplicação Spring Boot
+CMD ["java", "-jar", "/app/enterprise-system-api.jar"]

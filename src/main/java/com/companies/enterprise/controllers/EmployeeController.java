@@ -1,9 +1,59 @@
 package com.companies.enterprise.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import com.companies.enterprise.entities.Employee;
+import com.companies.enterprise.repositories.EmployeeRepository;
+import com.companies.enterprise.validation.RequestEmployee;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/funcionario")
 public class EmployeeController {
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @GetMapping
+    public ResponseEntity getAllEmployees() {
+        return ResponseEntity.ok(employeeRepository.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity saveAddress(@RequestBody @Valid RequestEmployee data) {
+        Employee employee = new Employee(data);
+        employeeRepository.save(employee);
+        return ResponseEntity.ok("Funcionario salvo com Sucesso!");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity updateAddress(@PathVariable long id, @RequestBody @Valid RequestEmployee data) {
+
+        Optional<Employee> optionalEmployee = employeeRepository.findById((id));
+        if (optionalEmployee.isPresent()) {
+            Employee employee = optionalEmployee.get();
+            employee.setName(data.name());
+            employee.setCpf(data.cpf());
+            employee.setGender(data.gender());
+            employee.setBirthdate(data.birthdate());
+            employee.setSalary(data.salary());
+
+            return ResponseEntity.ok(employeeRepository.save(employee));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteEmployee(@PathVariable Long id) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if (employee.isPresent()) {
+            employeeRepository.delete(employee.get());
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 }
