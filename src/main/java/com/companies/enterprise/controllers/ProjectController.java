@@ -24,10 +24,11 @@ public class ProjectController {
 
     @PostMapping
     public ResponseEntity saveProject(@RequestBody @Valid RequestProject data) {
-        Project project= new Project(data);
+        Project project = new Project(data);
         projectRepository.save(project);
         return ResponseEntity.status(201).body("Projeto salvo com sucesso!");
     }
+
     @PutMapping("/{id}")
     public ResponseEntity updateProject(@PathVariable Long id, @RequestBody @Valid RequestProject data) {
         Optional<Project> project = projectRepository.findById(id);
@@ -43,6 +44,7 @@ public class ProjectController {
         }
         return ResponseEntity.notFound().build();
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteProject(@PathVariable Long id) {
         Optional<Project> project = projectRepository.findById(id);

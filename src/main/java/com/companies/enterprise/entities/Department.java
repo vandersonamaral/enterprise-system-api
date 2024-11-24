@@ -1,5 +1,6 @@
 package com.companies.enterprise.entities;
 
+import com.companies.enterprise.validation.RequestDepartment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,4 +26,8 @@ public class Department {
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Budget> budgets;
 
+    public Department(RequestDepartment requestDepartment) {
+        this.name=requestDepartment.name();
+        this.number=requestDepartment.number();
+    }
 }
