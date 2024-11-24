@@ -1,5 +1,6 @@
 package com.companies.enterprise.entities;
 
+import com.companies.enterprise.validation.RequestProject;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,4 +34,12 @@ public class Project {
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
+
+    public Project(RequestProject requestProject) {
+        this.name=requestProject.name();
+        this.cost=requestProject.cost();
+        this.startDate=requestProject.startDate();
+        this.endDate=requestProject.endDate();
+        this.value=requestProject.value();
+    }
 }
