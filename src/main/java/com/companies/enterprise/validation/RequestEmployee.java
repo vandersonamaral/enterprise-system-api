@@ -18,6 +18,8 @@ public record RequestEmployee(
         @NotNull
         LocalDate birthdate,
         @NotNull
-        Double salary
+        Double salary,
+        @NotNull
+        long address_id
 ) {
 }
