@@ -8,7 +8,9 @@ services:
       MYSQL_USER: Vanderson
       MYSQL_PASSWORD: root
     ports:
-      - "3306:3306"
+      - "3309:3306"
+    volumes:
+      - db_data:/var/lib/mysql
     networks:
       - enterprise_network
 
@@ -21,11 +23,16 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
     depends_on:
       - db
-    command: ["sh", "-c", "dockerize -wait tcp://db:3306 -timeout 60s java -jar /app/enterprise-system-api.jar"]
+    volumes:
+      - ./target/enterprise-system-api-0.0.1-SNAPSHOT.jar:/app/enterprise-system-api.jar
+    command: [ "java", "-jar", "/app/enterprise-system-api.jar" ]
     ports:
-      - "8081:8080"
+      - "8080:8080"
     networks:
       - enterprise_network
+
+volumes:
+  db_data:
 
 networks:
   enterprise_network:
