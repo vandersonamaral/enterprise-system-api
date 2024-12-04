@@ -1,5 +1,6 @@
 package com.companies.enterprise.entities;
 
+import com.companies.enterprise.validation.RequestBudget;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,9 +28,17 @@ public class Budget {
     private Double value;
 
 
-    // Relacionamento com o Departamento
+
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
+
+    public Budget(RequestBudget requestBudget) {
+        this.description=requestBudget.description();
+        this.startDate=requestBudget.startDate();
+        this.endDate=requestBudget.endDate();
+        this.value=requestBudget.value();
+    }
+
 
 }
