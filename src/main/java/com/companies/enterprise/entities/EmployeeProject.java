@@ -9,7 +9,7 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "employee_product")
+@Table(name = "employee_project")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,13 +21,18 @@ public class EmployeeProject {
     private String role;
 
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id", referencedColumnName = "id")
-    private Employee employee;
-
+    @EmbeddedId
+    private EmployeeProjectId uuid;
 
     @ManyToOne
-    @JoinColumn(name = "project_id", referencedColumnName = "id")
-    private Project project;
+    @MapsId("employeeId")
+    @JoinColumn(name = "employee_Id")
+    private  Employee employee;
+
+    @ManyToOne
+    @MapsId("projectId")
+    @JoinColumn(name = "project_Id")
+    private  Project project;
+
 
 }

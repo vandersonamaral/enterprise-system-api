@@ -22,6 +22,9 @@ public class Address {
     private String postal_code;
     private String street;
 
+    @OneToOne(mappedBy = "address")
+    private Employee employee;
+
     public Address(RequestAddress requestAddress) {
         this.city = requestAddress.city();
         this.country = requestAddress.country();

@@ -28,7 +28,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity saveAddress(@RequestBody @Valid RequestEmployee data) {
+    public ResponseEntity saveEmployee(@RequestBody @Valid RequestEmployee data) {
         Optional<Address> optionalAddress = addressRepository.findById(data.address_id());
         if (optionalAddress.isEmpty()) {
             return ResponseEntity.badRequest().body("Endereco nao encontrado pelo Id: " + data.address_id());
@@ -41,7 +41,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateAddress(@PathVariable long id, @RequestBody @Valid RequestEmployee data) {
+    public ResponseEntity updateEmployee(@PathVariable long id, @RequestBody @Valid RequestEmployee data) {
 
         Optional<Employee> optionalEmployee = employeeRepository.findById((id));
         if (optionalEmployee.isPresent()) {
