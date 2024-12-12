@@ -11,8 +11,6 @@ services:
       - "3309:3306"
     volumes:
       - db_data:/var/lib/mysql
-    networks:
-      - enterprise_network
 
   app:
     image: openjdk:21
@@ -28,12 +26,7 @@ services:
     command: [ "java", "-jar", "/app/enterprise-system-api.jar" ]
     ports:
       - "8080:8080"
-    networks:
-      - enterprise_network
 
 volumes:
   db_data:
 
-networks:
-  enterprise_network:
-    driver: bridge
