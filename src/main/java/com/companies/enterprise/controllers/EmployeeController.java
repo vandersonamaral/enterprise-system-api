@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/funcionario")
@@ -24,11 +25,14 @@ public class EmployeeController {
 
     @GetMapping
     public ResponseEntity getAllEmployees() {
+        if (employeeRepository.findAll().isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(employeeRepository.findAll());
     }
 
-    @PostMapping
-    public ResponseEntity saveEmployee(@RequestBody @Valid RequestEmployee data) {
+    @PostMapping()
+    public ResponseEntity saveAddress(@RequestBody @Valid RequestEmployee data) {
         Optional<Address> optionalAddress = addressRepository.findById(data.address_id());
         if (optionalAddress.isEmpty()) {
             return ResponseEntity.badRequest().body("Endereco nao encontrado pelo Id: " + data.address_id());
@@ -38,10 +42,10 @@ public class EmployeeController {
         employee.setAddress(address);
         employeeRepository.save(employee);
         return ResponseEntity.ok("Funcionario salvo com Sucesso!");
-    }
 
+    }
     @PutMapping("/{id}")
-    public ResponseEntity updateEmployee(@PathVariable long id, @RequestBody @Valid RequestEmployee data) {
+    public ResponseEntity updateEmployee(@PathVariable UUID id, @RequestBody @Valid RequestEmployee data) {
 
         Optional<Employee> optionalEmployee = employeeRepository.findById((id));
         if (optionalEmployee.isPresent()) {
@@ -58,7 +62,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity deleteEmployee(@PathVariable UUID id) {
         Optional<Employee> employee = employeeRepository.findById(id);
         if (employee.isPresent()) {
             employeeRepository.delete(employee.get());

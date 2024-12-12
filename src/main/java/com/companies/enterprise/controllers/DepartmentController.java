@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/department")
+@RequestMapping("/departmento")
 public class DepartmentController {
 
     @Autowired
@@ -20,6 +20,9 @@ public class DepartmentController {
 
     @GetMapping()
     public ResponseEntity getAllDepartments() {
+        if (departmentRepository.findAll().isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(departmentRepository.findAll());
     }
 

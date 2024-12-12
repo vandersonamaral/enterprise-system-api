@@ -20,13 +20,16 @@ public class BudgetController {
 
     @GetMapping
     public ResponseEntity findAllBudgets() {
+        if (budgetRepository.findAll().isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(budgetRepository.findAll());
     }
     @PostMapping
     public ResponseEntity saveBudget(@RequestBody @Valid  RequestBudget data) {
         Budget budget = new Budget(data);
         budgetRepository.save(budget);
-        return ResponseEntity.status(201).body("Orcamento efetuado com sucesso");
+        return ResponseEntity.status(201).body("Orcamento cadastrado com sucesso");
     }
 
     @PutMapping("/{id}")

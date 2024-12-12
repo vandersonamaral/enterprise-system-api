@@ -19,6 +19,9 @@ public class ProjectController {
 
     @GetMapping
     public ResponseEntity getAllProjects() {
+        if (projectRepository.findAll().isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(projectRepository.findAll());
     }
 

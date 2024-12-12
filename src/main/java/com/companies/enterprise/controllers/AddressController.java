@@ -19,6 +19,9 @@ public class AddressController {
 
     @GetMapping
     public ResponseEntity getAllAddresses() {
+        if (addressRepository.findAll().isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(addressRepository.findAll());
     }
 
