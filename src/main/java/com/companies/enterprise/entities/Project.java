@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.List;
 
 
 @Entity
@@ -28,18 +27,18 @@ public class Project {
     private LocalDate endDate;
     private Double value;
 
-    @OneToMany(mappedBy = "project")
-    private List<EmployeeProject> employeesProject;
+
+
 
     @ManyToOne
-    @JoinColumn(name = "department_id")
+    @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
     public Project(RequestProject requestProject) {
-        this.name=requestProject.name();
-        this.cost=requestProject.cost();
-        this.startDate=requestProject.startDate();
-        this.endDate=requestProject.endDate();
-        this.value=requestProject.value();
+        this.name = requestProject.name();
+        this.cost = requestProject.cost();
+        this.startDate = requestProject.startDate();
+        this.endDate = requestProject.endDate();
+        this.value = requestProject.value();
     }
 }

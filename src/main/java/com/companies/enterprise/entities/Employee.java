@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.UUID;
 
 
 @Entity
@@ -16,9 +16,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Employee {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String name;
     private String cpf;
     private String gender;
@@ -31,21 +32,16 @@ public class Employee {
         this.gender = requestEmployee.gender();
         this.birthdate = requestEmployee.birthdate();
         this.salary = requestEmployee.salary();
-
     }
 
-
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
     @ManyToOne
-    @JoinColumn(name = "supervisor_id")
+    @JoinColumn(name = "supervisor_id", referencedColumnName = "id")
     private Employee supervisor;
 
-
-    @OneToMany(mappedBy = "employee")
-    private List<EmployeeProject> employeeProjects;
 
 
 }

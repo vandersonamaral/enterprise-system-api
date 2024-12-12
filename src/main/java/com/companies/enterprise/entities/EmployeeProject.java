@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-
 @Entity
 @Table(name = "employee_project")
 @Getter
@@ -19,20 +17,12 @@ public class EmployeeProject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String role;
-
-
-    @EmbeddedId
-    private EmployeeProjectId uuid;
+    private String name;
+    @ManyToOne
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
+    private Employee employee;
 
     @ManyToOne
-    @MapsId("employeeId")
-    @JoinColumn(name = "employee_Id")
-    private  Employee employee;
-
-    @ManyToOne
-    @MapsId("projectId")
-    @JoinColumn(name = "project_Id")
-    private  Project project;
-
-
+    @JoinColumn(name = "project_id", referencedColumnName = "id")
+    private Project project;
 }
