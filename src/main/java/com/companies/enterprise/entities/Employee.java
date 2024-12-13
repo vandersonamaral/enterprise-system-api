@@ -32,16 +32,15 @@ public class Employee {
         this.gender = requestEmployee.gender();
         this.birthdate = requestEmployee.birthdate();
         this.salary = requestEmployee.salary();
+
     }
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private Address address;
+    private Address address_id;
 
     @ManyToOne
     @JoinColumn(name = "supervisor_id", referencedColumnName = "id")
-    private Employee supervisor;
-
-
+    private Employee supervisor_id;
 
 }
