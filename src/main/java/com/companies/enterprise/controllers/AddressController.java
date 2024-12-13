@@ -29,7 +29,7 @@ public class AddressController {
     public ResponseEntity saveAddress(@RequestBody @Valid RequestAddress data) {
         Address address = new Address(data);
         addressRepository.save(address);
-        return ResponseEntity.ok("Endereco salvo com Sucesso!");
+        return ResponseEntity.ok(address);
     }
 
     @PutMapping("/{id}")
