@@ -14,14 +14,13 @@ import lombok.*;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String city;
     private String country;
     private String fu;
     private Integer number;
     private String postal_code;
     private String street;
-
 
 
     public Address(RequestAddress requestAddress) {
