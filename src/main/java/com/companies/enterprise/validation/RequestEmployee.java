@@ -1,5 +1,6 @@
 package com.companies.enterprise.validation;
 
+import com.companies.enterprise.entities.Address;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -20,7 +21,8 @@ public record RequestEmployee(
         LocalDate birthdate,
         @NotNull
         Double salary,
+        UUID supervisor_id,
         @NotNull
-        long address_id
+        Long address_id
 ) {
 }
