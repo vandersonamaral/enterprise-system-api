@@ -1,5 +1,6 @@
 package com.companies.enterprise.entities;
 
+import com.companies.enterprise.validation.RequestEmployeeProject;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +18,11 @@ public class EmployeeProject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String role;
-    private String name;
+
+    public EmployeeProject(RequestEmployeeProject requestEmployeeProject) {
+        this.role=requestEmployeeProject.role();
+    }
+
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
@@ -25,4 +30,6 @@ public class EmployeeProject {
     @ManyToOne
     @JoinColumn(name = "project_id", referencedColumnName = "id")
     private Project project;
+
+
 }

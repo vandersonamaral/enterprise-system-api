@@ -31,7 +31,7 @@ public class Project {
 
 
     @ManyToOne
-    @JoinColumn(name = "department_id", nullable = false)
+    @JoinColumn(name = "department_id")
     private Department department;
 
     public Project(RequestProject requestProject) {

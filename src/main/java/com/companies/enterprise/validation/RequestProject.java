@@ -17,7 +17,8 @@ public record RequestProject(
         @NotNull
         LocalDate endDate,
         @NotNull
-        Double value
+        Double value,
+        Long department_id
 
 ) {
 }
