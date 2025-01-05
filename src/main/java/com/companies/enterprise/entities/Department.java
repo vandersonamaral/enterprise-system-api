@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 
 
 @Entity
@@ -22,9 +21,6 @@ public class Department {
     private String name;
     private Integer number;
 
-
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Budget> budgets;
 
     public Department(RequestDepartment requestDepartment) {
         this.name=requestDepartment.name();
