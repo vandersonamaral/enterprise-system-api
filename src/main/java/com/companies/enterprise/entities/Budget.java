@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.List;
 
 
 @Entity
@@ -28,16 +27,15 @@ public class Budget {
     private Double value;
 
 
-
     @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
+    @JoinColumn
+    private Department department_id;
 
     public Budget(RequestBudget requestBudget) {
-        this.description=requestBudget.description();
-        this.startDate=requestBudget.startDate();
-        this.endDate=requestBudget.endDate();
-        this.value=requestBudget.value();
+        this.description = requestBudget.description();
+        this.startDate = requestBudget.startDate();
+        this.endDate = requestBudget.endDate();
+        this.value = requestBudget.value();
     }
 
 
