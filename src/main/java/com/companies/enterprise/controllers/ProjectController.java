@@ -1,7 +1,10 @@
 package com.companies.enterprise.controllers;
 
+import com.companies.enterprise.entities.Department;
 import com.companies.enterprise.entities.Project;
+import com.companies.enterprise.repositories.DepartmentRepository;
 import com.companies.enterprise.repositories.ProjectRepository;
+import com.companies.enterprise.services.ProjectService;
 import com.companies.enterprise.validation.RequestProject;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,10 @@ public class ProjectController {
 
     @Autowired
     private ProjectRepository projectRepository;
+    @Autowired
+    private ProjectService projectService;
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     @GetMapping
     public ResponseEntity getAllProjects() {
@@ -27,9 +34,21 @@ public class ProjectController {
 
     @PostMapping
     public ResponseEntity saveProject(@RequestBody @Valid RequestProject data) {
-        Project project = new Project(data);
-        projectRepository.save(project);
-        return ResponseEntity.status(201).body("Projeto salvo com sucesso!");
+        try {
+            projectService.validateDepartment(data);
+
+            Project project = new Project(data);
+            Optional<Department> departmentOptional = departmentRepository.findById(data.department_id());
+            if (departmentOptional.isPresent()) {
+                project.setDepartment(departmentOptional.get());
+            }
+            projectRepository.save(project);
+            return ResponseEntity.ok().body(project);
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     @PutMapping("/{id}")
