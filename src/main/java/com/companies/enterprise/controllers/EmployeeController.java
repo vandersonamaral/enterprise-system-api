@@ -50,6 +50,33 @@ public class EmployeeController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/nome/{name}")
+    public ResponseEntity<List<EmployeeDto>> getEmployeeByName(@PathVariable String name) {
+        List<Employee> employee = employeeRepository.findByNameContainingIgnoreCase(name);
+
+        if (employee.isEmpty()) {
+            throw new NoEmployeesFoundException("Não foi encontrado nenhum funcionário com esse nome"+ name);
+        }
+        List<EmployeeDto> employeeDto = EmployeeDto.converter(employee);
+        return ResponseEntity.ok(employeeDto);
+    }
+
+    @GetMapping("/supervisor/{supervisorId}")
+    public ResponseEntity<?> getEmployeesBySupervisor(@PathVariable UUID supervisorId) {
+        Optional<Employee> supervisorOpt = employeeRepository.findById(supervisorId);
+
+        if (supervisorOpt.isPresent()) {
+            Employee supervisor = supervisorOpt.get();
+            List<Employee> employees = employeeRepository.findBySupervisorId(supervisor);
+
+            if (!employees.isEmpty()) {
+                return ResponseEntity.ok().body(employees);
+            }
+            return ResponseEntity.status(404).body("Nenhum funcionário foi encontrado sob a supervisão do supervisor com o ID: " + supervisorId);
+        }
+        return ResponseEntity.status(404).body("Supervisor não encontrado");
+    }
+
     @PostMapping
     public ResponseEntity saveEmployee(@RequestBody @Valid RequestEmployee data) {
         try {

@@ -8,9 +8,11 @@ import com.companies.enterprise.services.BudgetService;
 import com.companies.enterprise.validation.RequestBudget;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
@@ -35,6 +37,20 @@ public class BudgetController {
         return ResponseEntity.ok(budgets);
     }
 
+    @GetMapping("/status/{department_id}")
+    public ResponseEntity<String> getBudgetStatus(@PathVariable Long department_id, @RequestParam LocalDate date) {
+
+        Optional<Department> department = departmentRepository.findById(department_id);
+
+        if (department.isEmpty()) {
+            return ResponseEntity.badRequest().body("Departamento não encontrado");
+        }
+
+        String status = budgetService.getBudgetStatus(department.get(), date);
+
+        return ResponseEntity.ok(status);
+    }
+
     @PostMapping
     public ResponseEntity saveBudget(@RequestBody @Valid RequestBudget data) {
         try {
@@ -46,7 +62,7 @@ public class BudgetController {
                 budget.setDepartment_id(departmentOptional.get());
             }
             budgetRepository.save(budget);
-            return ResponseEntity.ok().body(budget);
+            return ResponseEntity.status(HttpStatus.CREATED).body(budget);
 
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -64,6 +80,7 @@ public class BudgetController {
             budget.setEndDate(data.endDate());
             budget.setValue(data.value());
             budgetRepository.save(budget);
+
             return ResponseEntity.ok("Orçamento atualizado com sucesso.");
         }
         return ResponseEntity.notFound().build();

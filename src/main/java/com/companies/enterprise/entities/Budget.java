@@ -38,5 +38,11 @@ public class Budget {
         this.value = requestBudget.value();
     }
 
-
+    @PrePersist
+    @PreUpdate
+    public void validateDates() {
+        if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("A data de início deve ser anterior à data de término.");
+        }
+    }
 }
