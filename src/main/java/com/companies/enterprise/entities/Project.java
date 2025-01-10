@@ -28,8 +28,6 @@ public class Project {
     private Double value;
 
 
-
-
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
@@ -40,5 +38,13 @@ public class Project {
         this.startDate = requestProject.startDate();
         this.endDate = requestProject.endDate();
         this.value = requestProject.value();
+    }
+
+    @PrePersist
+    @PreUpdate
+    public void validateDates() {
+        if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("A data de início deve ser anterior à data de término.");
+        }
     }
 }
