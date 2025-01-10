@@ -21,7 +21,7 @@ public record RequestEmployee(
         LocalDate birthdate,
         @NotNull
         Double salary,
-        UUID supervisor_id,
+        UUID supervisorId,
         @NotNull
         Long address_id
 ) {

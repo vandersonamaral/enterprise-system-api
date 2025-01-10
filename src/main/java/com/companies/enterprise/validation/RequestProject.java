@@ -10,7 +10,6 @@ public record RequestProject(
 
         @NotBlank
         String name,
-        @NotNull
         Double cost,
         @NotNull
         LocalDate startDate,

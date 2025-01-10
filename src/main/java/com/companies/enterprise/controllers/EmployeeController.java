@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,24 +27,24 @@ public class EmployeeController {
     private EmployeeRepository employeeRepository;
     @Autowired
     private AddressRepository addressRepository;
-
     @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping
 
+    @GetMapping
     public List<EmployeeDto> getAllEmployees() {
         List<Employee> employees = employeeRepository.findAll();
+
         if (employees.isEmpty()) {
             throw new NoEmployeesFoundException("Nao foi encontrado nenhum empregado");
         }
         return EmployeeDto.converter(employees);
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable UUID id) {
         Optional<Employee> employee = employeeRepository.findById(id);
+
         if (employee.isPresent()) {
             return ResponseEntity.ok(new EmployeeDto(employee.get()));
         }
@@ -84,22 +85,20 @@ public class EmployeeController {
 
             Employee employee = new Employee(data);
 
-
             Optional<Address> addressOpt = addressRepository.findById(data.address_id());
             if (addressOpt.isPresent()) {
                 employee.setAddress_id(addressOpt.get());
             }
 
-            if (data.supervisor_id() != null) {
-                Optional<Employee> supervisorOpt = employeeRepository.findById(data.supervisor_id());
+            if (data.supervisorId() != null) {
+                Optional<Employee> supervisorOpt = employeeRepository.findById(data.supervisorId());
                 if (supervisorOpt.isPresent()) {
-                    employee.setSupervisor_id(supervisorOpt.get());
+                    employee.setSupervisorId(supervisorOpt.get());
                 }
             }
-
             employeeRepository.save(employee);
 
-            return ResponseEntity.ok(new EmployeeDto(employee));
+            return ResponseEntity.status(201).body(new EmployeeDto(employee));
 
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

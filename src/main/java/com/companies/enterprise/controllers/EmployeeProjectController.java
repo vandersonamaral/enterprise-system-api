@@ -11,11 +11,15 @@ import com.companies.enterprise.services.EmployeeProjectsService;
 import com.companies.enterprise.validation.RequestEmployeeProject;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -24,7 +28,6 @@ public class EmployeeProjectController {
 
     @Autowired
     private EmployeeProjectRepository employeeProjectRepository;
-
     @Autowired
     private EmployeeProjectsService employeeProjectsService;
     @Autowired
@@ -35,6 +38,17 @@ public class EmployeeProjectController {
     @GetMapping
     public ResponseEntity getAllEmployeeProjects() {
         return ResponseEntity.ok(employeeProjectRepository.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<Project>> getEmployeeProjectById(@PathVariable UUID id) {
+        List<EmployeeProject> employeeProjects = employeeProjectRepository.findByEmployeeId(id);
+
+        if (employeeProjects.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        List<Project> projects = employeeProjects.stream().map(EmployeeProject::getProject).collect(Collectors.toList());
+        return ResponseEntity.ok(projects);
     }
 
     @PostMapping
@@ -54,7 +68,7 @@ public class EmployeeProjectController {
             }
 
             employeeProjectRepository.save(employeeProject);
-            return ResponseEntity.ok(new EmployeeProjectDto(employeeProject));
+            return ResponseEntity.status(HttpStatus.CREATED).body(new EmployeeProjectDto(employeeProject));
 
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

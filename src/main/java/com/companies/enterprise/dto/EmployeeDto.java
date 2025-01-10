@@ -34,9 +34,9 @@ public class EmployeeDto {
         this.salary = employee.getSalary();
         this.address = new AddressDto(employee.getAddress_id());
 
-        // Apenas criar o SupervisorDto se o supervisor existir
-        if (employee.getSupervisor_id() != null) {
-            this.supervisor = new SupervisorDto(employee.getSupervisor_id());
+
+        if (employee.getSupervisorId() != null) {
+            this.supervisor = new SupervisorDto(employee.getSupervisorId());
         }
     }
 

@@ -41,6 +41,6 @@ public class Employee {
 
     @ManyToOne
     @JoinColumn(name = "supervisor_id", referencedColumnName = "id")
-    private Employee supervisor_id;
+    private Employee supervisorId;
 
 }
