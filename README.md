@@ -15,9 +15,21 @@ API RESTful desenvolvida com o framework Spring Boot para gestão de uma empresa
 - **Docker**: Containerização da aplicação
 - **Banco de Dados**: MySQL
 
+## Dependências Utilizadas
+
+- **Spring Boot Data JPA**: Para gerenciamento de dados e integração com o banco de dados.
+- **Spring Boot Web**: Para construir a API RESTful.
+- **Spring Boot DevTools**: Para facilitar o desenvolvimento (opcional).
+- **Spring Boot Validation**: Para validação de dados.
+- **MySQL Connector**: Para conexão com o banco de dados MySQL.
+- **Lombok**: Para reduzir a verbosidade do código Java (opcional).
+- **Spring Boot Security**: Para gerenciamento de autenticação e autorização.
+- **Spring Boot Test**: Para testes automatizados.
+- **Spring Security Test**: Para testes de segurança.
+- **Java JWT**: Para manipulação de JSON Web Tokens.
 
 
-## Endpoints
+## Principais Endpoints
 
 Aqui estão os principais endpoints da API:
 
