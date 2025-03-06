@@ -1,8 +1,8 @@
 package com.companies.enterprise.controllers;
 
-import com.companies.enterprise.dto.EmployeeDto;
-import com.companies.enterprise.services.EmployeeService;
-import com.companies.enterprise.validation.RequestEmployee;
+import com.companies.enterprise.dtos.out.EmployeeDto;
+import com.companies.enterprise.domain.services.EmployeeService;
+import com.companies.enterprise.dtos.in.RequestEmployee;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

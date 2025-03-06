@@ -1,8 +1,8 @@
 package com.companies.enterprise.controllers;
 
 
-import com.companies.enterprise.services.AddressService;
-import com.companies.enterprise.validation.RequestAddress;
+import com.companies.enterprise.domain.services.AddressService;
+import com.companies.enterprise.dtos.in.RequestAddress;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,9 +1,9 @@
 package com.companies.enterprise.controllers;
 
-import com.companies.enterprise.repositories.BudgetRepository;
-import com.companies.enterprise.repositories.DepartmentRepository;
-import com.companies.enterprise.services.BudgetService;
-import com.companies.enterprise.validation.RequestBudget;
+import com.companies.enterprise.infrastructure.repositories.BudgetRepository;
+import com.companies.enterprise.infrastructure.repositories.DepartmentRepository;
+import com.companies.enterprise.domain.services.BudgetService;
+import com.companies.enterprise.dtos.in.RequestBudget;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

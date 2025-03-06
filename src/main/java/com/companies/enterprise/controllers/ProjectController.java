@@ -1,7 +1,7 @@
 package com.companies.enterprise.controllers;
 
-import com.companies.enterprise.services.ProjectService;
-import com.companies.enterprise.validation.RequestProject;
+import com.companies.enterprise.domain.services.ProjectService;
+import com.companies.enterprise.dtos.in.RequestProject;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
