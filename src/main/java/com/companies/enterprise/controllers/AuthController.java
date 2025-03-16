@@ -1,7 +1,7 @@
 package com.companies.enterprise.controllers;
 
-import com.companies.enterprise.dto.AuthDto;
-import com.companies.enterprise.services.TokenService;
+import com.companies.enterprise.dtos.out.AuthDto;
+import com.companies.enterprise.domain.services.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;

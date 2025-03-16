@@ -1,60 +1,39 @@
 package com.companies.enterprise.controllers;
 
-import com.companies.enterprise.entities.Department;
-import com.companies.enterprise.repositories.DepartmentRepository;
-import com.companies.enterprise.validation.RequestDepartment;
+import com.companies.enterprise.domain.services.DepartmentService;
+import com.companies.enterprise.dtos.in.RequestDepartment;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/departmento")
 public class DepartmentController {
 
     @Autowired
-    private DepartmentRepository departmentRepository;
+    private DepartmentService departmentService;
+
 
     @GetMapping()
     public ResponseEntity getAllDepartments() {
-        if (departmentRepository.findAll().isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(departmentRepository.findAll());
+        return ResponseEntity.ok(departmentService.getAllDepartments());
     }
 
     @PostMapping
     public ResponseEntity saveDepartment(@RequestBody @Valid RequestDepartment data) {
-        Department department = new Department(data);
-        departmentRepository.save(department);
-        return ResponseEntity.status(201).body("Departamento salvo com sucesso");
+        return ResponseEntity.ok(departmentService.saveDepartment(data));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity updateDepartment(@PathVariable Long id, @RequestBody @Valid RequestDepartment data) {
-        Optional<Department> department = departmentRepository.findById(id);
-        if (department.isPresent()) {
-            Department departmentUpdate = department.get();
-            departmentUpdate.setName(data.name());
-            departmentUpdate.setNumber(data.number());
-            departmentRepository.save(departmentUpdate);
-            return ResponseEntity.ok("Departamento atualizado com sucesso");
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(departmentService.updateDepartment(id, data));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteDepartment(@PathVariable Long id) {
-        Optional<Department> department = departmentRepository.findById(id);
-        if (department.isPresent()) {
-            departmentRepository.delete(department.get());
-            return ResponseEntity.status(204).build();
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(departmentService.deleteDepartment(id));
     }
-
-
 }

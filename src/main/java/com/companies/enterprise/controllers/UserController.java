@@ -1,7 +1,7 @@
 package com.companies.enterprise.controllers;
 
-import com.companies.enterprise.dto.UserDto;
-import com.companies.enterprise.services.UserSevice;
+import com.companies.enterprise.dtos.out.UserDto;
+import com.companies.enterprise.domain.services.UserSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
